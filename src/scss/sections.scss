@@ -1,0 +1,190 @@
+.section {
+  &-home {
+    .header {
+      width: 100%;
+      position: relative;
+      padding: 16px 20px;
+      padding-bottom: 120px;
+      // display: grid;
+      // grid-template-columns: 160px 60px;
+      // grid-column-gap: 91px;
+      background-image: linear-gradient(315deg, #303C6F 0%, #222E61 100%);
+
+      .title {
+        font-size: 24px;
+        font-family: 'BrandonText-Bold';
+        letter-spacing: 0.48px;
+        color: white;
+      }
+      .profile {
+        position: relative;
+        display: grid;
+        grid-template-columns: auto auto;
+        align-items: center;
+        grid-column-gap: 16px;
+        .photo {
+          width: 48px;
+          height: 48px;
+          background-position: center;
+          background-size: cover;
+          background-repeat: no-repeat;
+          border-radius: 100%;
+        }
+        .btn-menu {
+          background-color: transparent;
+          img {
+            width: 16px;
+            pointer-events: none;
+          }
+        }
+      }
+    }
+    .body {
+      position: relative;
+      color: white;
+      background-color: #1D1D1D;
+      border-radius: 8px;
+      margin: auto;
+      top: -100px;
+      min-width: 250px;
+      max-width: 665px;
+      margin: 0 auto;
+      padding: 16px;
+      &:not(:first-child) {
+        margin-top: 30px;
+      }
+      .video {
+        border-radius: 25%;
+        margin-bottom: 16px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .title {
+        font-family: 'BrandonText-Medium';
+        font-size: 20px;
+        letter-spacing: 0.38px;
+        margin-bottom: 8px;
+      }
+      .desc {
+        font-family: 'BrandonText-Medium';
+        width: 100%;
+        display: flex;
+        font-size: 13px;
+        margin-bottom: 16px;
+      }
+      .info {
+        width: 100%;
+        display: flex;
+        button {
+          font-family: 'BrandonText-Medium';
+          border: none;
+          outline: none;
+          background: none;
+          color: white;
+          font-size: 1rem;
+          font-weight: 400;
+          flex-direction: row;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+        }
+      }
+    }
+
+    @media only screen and (max-width: 335px) {
+      .body{
+        max-width: 335px;
+        margin: 0 20px;
+      }
+    }
+
+  }
+  &-quiz {
+    padding: 20px 5px;
+    width: 100%;
+    max-width: 335px;
+    margin: auto;
+    .header {
+      display: grid;
+      grid-template-columns: max-content auto max-content;
+      grid-gap: 20px;
+      margin-bottom: 30px;
+
+      .btn-icon {
+        height: 100%;
+      }
+
+      .labels {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        .item {
+          border-radius: 50px;
+          border: solid 1px #e5e9f2;
+          padding: 3px 10px;
+          color: #535761;
+          font-size: 13px;
+          width: max-content;
+          font-family: 'BrandonText-Medium';
+          &.timer {
+            font-weight: bold;
+          }
+          &:not(:last-child) {
+            margin-right: 10px;
+          }
+        }
+      }
+    }
+    .body {
+      color: #06080c;
+      .banner {
+        position: relative;
+        // padding-top: 60%;
+        border-radius: 10px;
+        margin-bottom: 16px;
+        height: 40vh; 
+        width: 100%; 
+        display: flex; 
+        justify-content: center; 
+        align-items: center;
+        // div,
+        // iframe,
+        // video,
+        img {
+          // position: absolute;
+          // width: 100%;
+          height: 100%;
+          // left: 50%;
+          // top: 50%;
+          // transform: translate(-50%, -50%);
+        }
+      }
+      .title {
+        font-family: 'BrandonText-Bold';
+        font-size: 18px;
+        line-height: 22px;
+        margin-bottom: 20px;
+      }
+      .answer {
+        .btn-next {
+          background-color: transparent;
+          border: 2px solid #e5e9f2;
+          margin-top: 10px;
+          text-align: left;
+          &:hover,
+          &:active {
+            // background-color: #1D1D1D;
+            // border: 2px solid transparent;
+          }
+          &.selected {
+            background-color: #1D1D1D;
+            border: 2px solid transparent;
+            color: white;
+          }
+        }
+      }
+    }
+  }
+}

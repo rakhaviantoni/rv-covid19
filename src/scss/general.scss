@@ -1,0 +1,269 @@
+
+
+body,html {
+  margin: 0;
+  font-family: "BrandonText-Regular";
+  background-color: #f8f9fb;
+  color: #06080c
+}
+
+* {
+  box-sizing: border-box
+}
+
+section {
+  position: relative
+}
+
+input {
+  outline: none
+}
+
+a {
+  text-decoration: none;
+  color: #4b83ff
+}
+
+button {
+  border: none;
+  outline: none;
+  font-weight: bold
+}
+
+.container {
+  max-width: 640px;
+  width: 100%;
+  padding: 0 20px
+}
+
+.btn-submit {
+  bottom: 0;
+  left: 0;
+  height: 60px;
+  width: 100%;
+  pointer-events: auto;
+  // background-color: $color--orange;
+  background-image: linear-gradient(315deg, #303C6F 0%, #222E61 100%);
+  color: white;
+
+  &.fixed {
+    position: fixed;
+  }
+
+  &.disabled {
+    background-color: $color--disabled;
+    color: $color--grey;
+    pointer-events: none;
+    background-image: none;
+  }
+}
+
+.layout-profile {
+  display: grid;
+  grid-template-columns: 48px calc(100% - 48px - 15px);
+  grid-column-gap: 15px;
+
+  .image {
+    width: 48px;
+    height: 48px;
+    border-radius: 100%;
+    overflow: hidden;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  .details {
+    .title {
+      font-size: 15px;
+      font-family: 'BrandonText-Bold';
+      line-height: 18px;
+    }
+    .subtitle {
+      font-size: 13px;
+      line-height: 16px;
+      margin-bottom: 16px;
+    }
+    .badges {
+      display: flex;
+
+      .item {
+        padding: 2px 6px;
+        font-size: 12px;
+        color: #592800;
+        line-height: 14px;
+        border-radius: 5px;
+        &:not(:last-child) {
+          margin-right: 8px;
+        }
+      }
+    }
+  }
+}
+
+.btn-search {
+  width: 24px;
+  height: 24px;
+  background-position: center;
+  background-size: 18px;
+  background-repeat: no-repeat;
+  background-image: url('../assets/images/magnifying-glass.png');
+  background-color: transparent;
+}
+
+.btn-setting {
+  width: 24px;
+  height: 24px;
+  background-position: center;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-image: url('../assets/images/settings.png');
+  background-color: transparent;
+}
+.btn-next {
+  background-color: #DA499A;
+  border-radius: 100px;
+  width: 100%;
+  color: #fff;
+  font-size: 16px;
+  font-family: 'BrandonText-Bold';
+  letter-spacing: 0.13px;
+  padding: 16px;
+  margin-top: 20px;
+  display: block;
+  text-align: center;
+}
+
+.btn-close {
+  background: transparent;
+  padding: 0;
+  width: 18px;
+  img {
+    width: 100%;
+  }
+}
+
+.btn-icon {
+  background: transparent;
+  display: block;
+  padding: 0;
+  width: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  img {
+    width: 100%;
+    max-height: 100%;
+  }
+}
+
+.popup-notif {
+  // position: fixed;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f8954a;
+  // padding: 20px;
+  padding-bottom: 80px;
+
+  .content {
+    position: relative;
+    width: max-content;
+    text-align: center;
+
+    img {
+      display: block;
+      width: 100px;
+      margin: auto;
+      margin-bottom: 40px;
+    }
+    h3 {
+      font-size: 20px;
+      margin-bottom: 5px;
+    }
+    p {
+      font-size: 14px;
+      text-align: center;
+      color: #0000009e;
+      max-width: 280px;
+      strong {
+        color: #000000ff;
+      }
+    }
+  }
+
+  .btn-back {
+    display: block;
+    width: calc(100% - 40px);
+    background-color: white;
+    font-size: 14px;
+    padding: 15px;
+    border-radius: 10px;
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: black;
+    text-align: center;
+  }
+}
+
+
+// N
+.btn-submit {
+  bottom: 0;
+  left: 0;
+  height: 60px;
+  width: 100%;
+  pointer-events: auto;
+  background-image: linear-gradient(315deg, #303C6F 0%, #222E61 100%);
+  color: #fff;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center
+}
+
+.btn-submit.fixed {
+  position: fixed
+}
+
+.btn-submit.disabled {
+  background-color: #e5e5e5;
+  color: #969aa2;
+  pointer-events: none;
+  background-image: none
+}
+
+.btn-search {
+  width: 24px;
+  height: 24px;
+  background-position: center;
+  background-size: 18px;
+  background-repeat: no-repeat;
+  background-image: url('../assets/images/magnifying-glass.png');
+  background-color: transparent
+}
+
+.btn-setting {
+  width: 24px;
+  height: 24px;
+  background-position: center;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-image: url('../assets/images/settings.png');
+  background-color: transparent
+}
+
+.custom-field {
+  position: relative;
+  width: 100%;
+  height: 52px;
+  padding: 5px 10px;
+  border: solid 1pt #e5e9f2;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 400;
+  font-family: "BrandonText-Regular"
+}
