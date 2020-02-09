@@ -17,6 +17,9 @@ export const getTimezoneNew = () => {
   return date.getTimezoneOffset() / 60
 }
 
+export const dateOnly = datetime => datetime
+  && `${dayjs(datetime).format('YYYY-MM-DD')}`
+
 export const datetimeToLocal = datetime => datetime
   && `${dayjs(datetime).format(commonDateTimeFormat)}`
 

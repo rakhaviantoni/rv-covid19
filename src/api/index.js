@@ -1,13 +1,12 @@
-import { API_URL, SITE_COOKIES, MENU } from '../config';
+import { API_URL, API_KEY, SITE_COOKIES, MENU } from '../config';
 import { getCookie, setCookie } from '../utils/cookies';
-import Auth from './auth'
-import Video from './video';
+import Car from './car';
 
 export const configApi = ({ contentType } = {}) => {
   let params = {
     headers: {
       'Content-Type': contentType || 'application/json',
-      'Authorization': `${getCookie(SITE_COOKIES.TOKEN)}`,
+      'x-api-key': API_KEY,
     },
   }
   return params
@@ -17,7 +16,7 @@ export const configApiCustomProd = ({ contentType } = {}) => {
   let params = {
     headers: {
       'Content-Type': contentType || 'application/json',
-      'Authorization': `${getCookie(SITE_COOKIES.TOKEN)}`,
+      'x-api-key': API_KEY,
     },
   }
   return params
@@ -44,5 +43,5 @@ export const BACK_TO_LOGIN = (isExpired = false) => {
 // )
 
 const params = { url: API_URL, config: configApi, configCustom: configApiCustomProd, defaultParams: { limit: 10 } }
-export const AuthApi = Auth(params)
-export const VideoApi = Video(params)
+// export const AuthApi = Auth(params)
+export const CarApi = Car(params)
