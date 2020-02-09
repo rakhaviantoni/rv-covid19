@@ -3,8 +3,8 @@ import { withRouter } from 'react-router-dom'
 import { Toast } from 'antd-mobile';
 import DayPicker from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
-import { CarApi, BACK_TO_LOGIN } from '../../api';
-import { dateOnly, datetimeToLocal } from '../../utils/formatter/datetime';
+import { CarApi, ReservationApi, BACK_TO_LOGIN } from '../../api';
+import { dateOnly } from '../../utils/formatter/datetime';
 import { Icon } from '@iconify/react';
 import close from '@iconify/icons-ant-design/close-circle-outlined';
 
@@ -16,7 +16,9 @@ class Home extends React.Component {
       data: {},
       list: [],
       form: {
-        comment: ''
+        registration_no: '',
+        customer: '',
+        date: ''
       },
       selectedDay: '',
       isLoading: true,
@@ -70,23 +72,24 @@ class Home extends React.Component {
     this.setState({ form })
   }
 
-  handleSubmit = (e, id) => {
+  handleSubmit = (e) => {
     e.preventDefault()
     this.setState({ loading: true })
     Toast.loading('Loading...', 1000, null, true)
-    let { form, options } = this.state
-    let params = { id_Car: id, comment: form.comment }
-    // CarApi.comment(params)
-    // .then(response => {
-    //   console.log(response)
-    //   if(response.data.status === 200){
-    //     Toast.hide()
-    //     Toast.success('Account has been created', 3, null, true)
-    //   }
-    // }).catch(err => {
-    //   Toast.hide()
-    //   Toast.fail(err.response?err.response.data.message:JSON.stringify(err.message), 3, null, true)
-    // })
+    let { form } = this.state
+    ReservationApi.reserve(form)
+    .then(response => {
+      console.log(response)
+      if(response.data.status === 200){
+        Toast.hide()
+        Toast.success(response.data.message, 2, null, true)
+        this.fetchCarList()
+        this.setState({ visiblePopup: false, form: { customer: '', date: '' } })
+      }
+    }).catch(err => {
+      Toast.hide()
+      Toast.fail(err.response?err.response.data.message:JSON.stringify(err.message), 3, null, true)
+    })
   }
 
   render() {
@@ -94,7 +97,7 @@ class Home extends React.Component {
     let { data, list, form, selectedDay, visiblePopup } = this.state
     
     const handleTogglePopup = (value, data) => {
-      this.setState({ visiblePopup: value, data })
+      this.setState({ visiblePopup: value, data, form: { registration_no: data.registration_no } })
     }
     // const handleSignout = e => {
     //   BACK_TO_LOGIN(true)
@@ -115,7 +118,10 @@ class Home extends React.Component {
               </div> */}
             </div>
             <div style={{ marginTop: 30, marginBottom: 0, textAlign: 'center', color: 'white' }}>
-            <DayPicker onDayClick={this.fetchCarList} selectedDays={selectedDay} />
+              <DayPicker onDayClick={this.fetchCarList} selectedDays={selectedDay} />
+              {/* <div className="input-container">
+                <input type="text" format="yyyy-mm-dd" className="custom-field" placeholder="Date" onChange={ e => this.onChange(e, 'date') } value={ form.date } />
+              </div> */}
             </div>
           </div>
           { 
@@ -148,30 +154,22 @@ class Home extends React.Component {
               <Icon icon={close} color="white" width="30" height="30" />
             </button>
             }
-            <div className="title">{data.registration_no}</div>
-            <div className="scroll">
-            {
-              (data.comments && data.comments.length > 0) ?
-              data.comments.slice(0).reverse().map((item, key) => 
-                <div className="comment" key={ key }>
-                  <div className="comment header">
-                    <span className="author">{item.username}
-                    </span>
-                    <span className="at">
-                    { datetimeToLocal(item.created_date) }
-                    </span>
-                  </div>
-                  <div className="comment text">
-                    {item.comment}
-                  </div>
+            <div className="title">Reservation form</div>
+            <form onSubmit={ this.handleSubmit }>
+              <div className="form">
+                <div className="input-container">
+                <input type="text" className="custom-field" placeholder="Registration No" onChange={ e => this.onChange(e, 'registration_no') } value={ form.registration_no } />
                 </div>
-              ) : 
-              'No Comments'
-            }
-            </div>
-            <form onSubmit={ e => this.handleSubmit(e, data.id) }>
-              <input type="text" className="input-comment" placeholder="Add a comment..." onChange={ e => this.onChange(e, 'comment') } value={ form.comment } />
-              <button type="submit" className="button-comment" disabled={ form.comment === '' }>Comment</button>
+                <div className="input-container">
+                <input type="text" className="custom-field" placeholder="Customer" onChange={ e => this.onChange(e, 'customer') } value={ form.customer } />
+                </div>
+                <div className="input-container">
+                <input type="text" className="custom-field" placeholder="Date" onChange={ e => this.onChange(e, 'date') } value={ form.date } />
+                </div>
+              </div>
+              <button className={ (form.registration_no&&form.customer&&form.date) !== '' ? 'btn-submit' : 'btn-submit disabled' } type="submit">
+                Reserve
+              </button>
             </form>
           </div>
         </div>

@@ -53,6 +53,11 @@
       &:not(:first-child) {
         margin-top: 30px;
       }
+      .input-container {
+        display: block;
+        width: 100%;
+        margin-bottom: 15px;
+      }
       .title {
         font-family: 'BrandonText-Medium';
         font-size: 20px;

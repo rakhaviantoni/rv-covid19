@@ -1,6 +1,7 @@
 import { API_URL, API_KEY, SITE_COOKIES, MENU } from '../config';
 import { getCookie, setCookie } from '../utils/cookies';
 import Car from './car';
+import Reservation from './reservation';
 
 export const configApi = ({ contentType } = {}) => {
   let params = {
@@ -45,3 +46,4 @@ export const BACK_TO_LOGIN = (isExpired = false) => {
 const params = { url: API_URL, config: configApi, configCustom: configApiCustomProd, defaultParams: { limit: 10 } }
 // export const AuthApi = Auth(params)
 export const CarApi = Car(params)
+export const ReservationApi = Reservation(params)
