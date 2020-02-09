@@ -1,6 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom'
-import { Toast } from 'antd-mobile';
+import { Popconfirm, Toast } from 'antd-mobile';
 import DayPicker from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
 import { CarApi, ReservationApi, BACK_TO_LOGIN } from '../../api';
@@ -57,15 +57,6 @@ class Home extends React.Component {
 
   }
 
-  formatDate = (d) => {
-    let date = [
-      d.getFullYear(),
-      ('0' + (d.getMonth() + 1)).slice(-2),
-      ('0' + d.getDate()).slice(-2)
-    ].join('-')
-    return new Date(date)
-  }
-
   onChange = (e, fname) => {
     let { form } = this.state
     form[fname] = e.target.value
@@ -78,6 +69,24 @@ class Home extends React.Component {
     Toast.loading('Loading...', 1000, null, true)
     let { form } = this.state
     ReservationApi.reserve(form)
+    .then(response => {
+      console.log(response)
+      if(response.data.status === 200){
+        Toast.hide()
+        Toast.success(response.data.message, 2, null, true)
+        this.fetchCarList()
+        this.setState({ visiblePopup: false, form: { customer: '', date: '' } })
+      }
+    }).catch(err => {
+      Toast.hide()
+      Toast.fail(err.response?err.response.data.message:JSON.stringify(err.message), 3, null, true)
+    })
+  }
+
+  cancel = (e, id) => {
+    e.preventDefault()
+    Toast.loading('Loading...', 1000, null, true)
+    ReservationApi.cancel(id)
     .then(response => {
       console.log(response)
       if(response.data.status === 200){
@@ -138,9 +147,16 @@ class Home extends React.Component {
                   <button className="btn-next" onClick={ e => handleTogglePopup(true, item) }>
                     Reserve
                   </button> :
-                  <button className="btn-next" onClick={ e => handleTogglePopup(true, item) }>
-                    Cancel Reservation
-                  </button>
+                  // <Popconfirm
+                  //   title="Are you sure cancel this reservation?"
+                  //   onConfirm={ e => this.cancel(e, item.id) }
+                  //   okText="Yes"
+                  //   cancelText="No"
+                  // >
+                    <button className="btn-next">
+                      Cancel Reservation
+                    </button>
+                  // </Popconfirm>
                 }
               </div>
             )
