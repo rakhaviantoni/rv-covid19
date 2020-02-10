@@ -3,9 +3,9 @@ let apiVersion = process.env.REACT_APP_API_VERSION
 let apiKey = process.env.REACT_APP_API_KEY
 let siteUrl = ''
 
-if(process.env.NODE_ENV === 'production'){
-  apiUrl = process.env.REACT_APP_API_URL
-  siteUrl = process.env.REACT_APP_SITE_URL
+if(!process.env.DEVELOPMENT){
+  apiUrl = process.env.REACT_APP_API_URL_PROD
+  siteUrl = process.env.REACT_APP_SITE_URL_PROD
 }
 
 export const SITE_URL = siteUrl

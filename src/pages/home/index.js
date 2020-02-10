@@ -1,31 +1,34 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom'
-import { Popconfirm, Toast } from 'antd-mobile';
-import DayPicker from 'react-day-picker';
+import { Toast } from 'antd-mobile';
+import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
-import { CarApi, ReservationApi, BACK_TO_LOGIN } from '../../api';
+import { CarApi, ReservationApi } from '../../api';
 import { dateOnly } from '../../utils/formatter/datetime';
 import { Icon } from '@iconify/react';
 import close from '@iconify/icons-ant-design/close-circle-outlined';
 
 class Home extends React.Component {
+  timeoutSearch = undefined;
   
   constructor(props) {
     super(props);
+    this.handleDayClick = this.handleDayClick.bind(this);
     this.state = {
       data: {},
       list: [],
+      search_text: '',
       form: {
         registration_no: '',
         customer: '',
         date: ''
       },
-      selectedDay: '',
+      selectedDay: undefined,
       isLoading: true,
-      visiblePopup: false
+      visiblePopup: false,
+      visibleConfirm: false
     };
   }
-
 
   componentDidMount() {
     this.init();
@@ -36,17 +39,24 @@ class Home extends React.Component {
     this.fetchCarList()
   }
 
+  handleDayClick(day) {
+    this.setState({ selectedDay: day });
+  }
+
   fetchCarList = (date='') => {
     Toast.loading('Loading...', 1000, null, true)
+    let { search_text } = this.state
+    let searchLength = search_text.length
+    let params = { q: searchLength > 0 ? search_text : '' }
     this.setState({ selectedDay: date })
     let data = { date: dateOnly(date) }
-    CarApi.status(data)
+    CarApi.status(data, params)
     .then(response => {
       if(response.data.status === 200){
         let { data, list } = this.state
         list = response.data.data
         data = list[1]
-        this.setState({ data, list })
+        data ? this.setState({ data, list }) : this.setState({ list })
         Toast.hide()
         Toast.success(response.data.message, 2, null, false)
       }
@@ -55,6 +65,19 @@ class Home extends React.Component {
       Toast.fail(err.response?err.response.data.message:JSON.stringify(err.message), 3, null, false)
     })
 
+  }
+
+  delaySearch = (e) => {
+    let { search_text, selectedDay } = this.state
+    this.setState({search_text:e.target.value})
+    if(this.timeoutSearch){
+      clearTimeout(this.timeoutSearch);
+    }
+    this.timeoutSearch = setTimeout(() => {
+      if(search_text.length > 0 || search_text.length === 0) {
+          this.fetchCarList(selectedDay ? dateOnly(selectedDay) : dateOnly(new Date()));
+      }
+    }, 500);
   }
 
   onChange = (e, fname) => {
@@ -67,15 +90,14 @@ class Home extends React.Component {
     e.preventDefault()
     this.setState({ loading: true })
     Toast.loading('Loading...', 1000, null, true)
-    let { form } = this.state
+    let { form, selectedDay } = this.state
     ReservationApi.reserve(form)
     .then(response => {
-      console.log(response)
       if(response.data.status === 200){
         Toast.hide()
         Toast.success(response.data.message, 2, null, true)
-        this.fetchCarList()
-        this.setState({ visiblePopup: false, form: { customer: '', date: '' } })
+        this.fetchCarList(selectedDay ? dateOnly(selectedDay) : dateOnly(new Date()))
+        this.setState({ visiblePopup: false, form: { registration: '', customer: '', date: '' } })
       }
     }).catch(err => {
       Toast.hide()
@@ -83,17 +105,19 @@ class Home extends React.Component {
     })
   }
 
-  cancel = (e, id) => {
+  handleCancel = (e) => {
     e.preventDefault()
     Toast.loading('Loading...', 1000, null, true)
-    ReservationApi.cancel(id)
+    let { data, selectedDay } = this.state
+    let params = { registration_no: data.registration_no, date: selectedDay ? dateOnly(selectedDay) : dateOnly(new Date()) }
+    ReservationApi.cancel(params)
     .then(response => {
       console.log(response)
       if(response.data.status === 200){
         Toast.hide()
         Toast.success(response.data.message, 2, null, true)
-        this.fetchCarList()
-        this.setState({ visiblePopup: false, form: { customer: '', date: '' } })
+        this.fetchCarList(selectedDay ? dateOnly(selectedDay) : dateOnly(new Date()))
+        this.setState({ visibleConfirm: false, form: { registration_no: '', customer: '', date: '' } })
       }
     }).catch(err => {
       Toast.hide()
@@ -103,10 +127,14 @@ class Home extends React.Component {
 
   render() {
 
-    let { data, list, form, selectedDay, visiblePopup } = this.state
+    let { data, list, form, selectedDay, visiblePopup, visibleConfirm } = this.state
     
     const handleTogglePopup = (value, data) => {
-      this.setState({ visiblePopup: value, data, form: { registration_no: data.registration_no } })
+      this.setState({ visiblePopup: value, data, form: { registration_no: data.registration_no ? data.registration_no : '', customer: '', date: selectedDay ? dateOnly(selectedDay) : dateOnly(new Date()) } })
+    }
+    
+    const handleToggleConfirm = (value, data) => {
+      this.setState({ visibleConfirm: value, data, selectedDay })
     }
     // const handleSignout = e => {
     //   BACK_TO_LOGIN(true)
@@ -126,11 +154,11 @@ class Home extends React.Component {
                 </button>
               </div> */}
             </div>
-            <div style={{ marginTop: 30, marginBottom: 0, textAlign: 'center', color: 'white' }}>
-              <DayPicker onDayClick={this.fetchCarList} selectedDays={selectedDay} />
-              {/* <div className="input-container">
-                <input type="text" format="yyyy-mm-dd" className="custom-field" placeholder="Date" onChange={ e => this.onChange(e, 'date') } value={ form.date } />
-              </div> */}
+            <div style={{ marginTop: 30, marginBottom: -20, textAlign: 'center', color: 'white' }}>
+              <DayPicker onDayClick={this.fetchCarList} selectedDays={this.selectedDay} />
+              <div className="input-container">
+                <input type="text" className="search-field" placeholder="Search" onChange={ e => this.delaySearch(e) } />
+              </div>
             </div>
           </div>
           { 
@@ -147,16 +175,9 @@ class Home extends React.Component {
                   <button className="btn-next" onClick={ e => handleTogglePopup(true, item) }>
                     Reserve
                   </button> :
-                  // <Popconfirm
-                  //   title="Are you sure cancel this reservation?"
-                  //   onConfirm={ e => this.cancel(e, item.id) }
-                  //   okText="Yes"
-                  //   cancelText="No"
-                  // >
-                    <button className="btn-next">
+                    <button className="btn-next" onClick={ e => handleToggleConfirm(true, item) }>
                       Cancel Reservation
                     </button>
-                  // </Popconfirm>
                 }
               </div>
             )
@@ -174,19 +195,36 @@ class Home extends React.Component {
             <form onSubmit={ this.handleSubmit }>
               <div className="form">
                 <div className="input-container">
-                <input type="text" className="custom-field" placeholder="Registration No" onChange={ e => this.onChange(e, 'registration_no') } value={ form.registration_no } />
+                <input type="text" className="custom-field" placeholder="Registration No" onChange={ e => this.onChange(e, 'registration_no') } value={ form.registration_no } readOnly />
                 </div>
                 <div className="input-container">
                 <input type="text" className="custom-field" placeholder="Customer" onChange={ e => this.onChange(e, 'customer') } value={ form.customer } />
                 </div>
                 <div className="input-container">
-                <input type="text" className="custom-field" placeholder="Date" onChange={ e => this.onChange(e, 'date') } value={ form.date } />
+                <input type="text" className="custom-field" placeholder="Date" onChange={ e => this.onChange(e, 'date') } value={ form.date } readOnly />
                 </div>
               </div>
               <button className={ (form.registration_no&&form.customer&&form.date) !== '' ? 'btn-submit' : 'btn-submit disabled' } type="submit">
                 Reserve
               </button>
             </form>
+          </div>
+        </div>
+
+        <div className={ visibleConfirm ? "popup active" : "popup" } >
+          <div className="content">
+            { visibleConfirm && 
+            <button className="btn-close" onClick={ e => handleToggleConfirm(false, {}) }>
+              <Icon icon={close} color="white" width="30" height="30" />
+            </button>
+            }
+            <div className="title">Cancel reservation by {data.customer} at {selectedDay ? dateOnly(selectedDay) : dateOnly(new Date())}?</div>
+            <button className="btn-confirmation" onClick={ e => handleToggleConfirm(false, {}) }>
+              No
+            </button>
+            <button className="btn-confirmation--outline" onClick={ e => this.handleCancel(e) }>
+              Yes
+            </button>
           </div>
         </div>
       </React.Fragment>

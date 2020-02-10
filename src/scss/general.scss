@@ -58,7 +58,7 @@ button {
   }
 }
 .btn-next {
-  background-color: #DA499A;
+  background-color: #D0021B;
   border-radius: 100px;
   width: 100%;
   color: #fff;
@@ -69,6 +69,23 @@ button {
   margin-top: 20px;
   display: block;
   text-align: center;
+}
+.btn-confirmation {
+  height: 30px;
+  width: 45%;
+  margin-right: 5%;
+  pointer-events: auto;
+  background-image: linear-gradient(315deg, #303C6F 0%, #222E61 100%);
+  color: white;
+
+  &--outline {
+    height: 30px;
+    width: 45%;
+    pointer-events: auto;
+    border: 2px solid #222E61;
+    background-color: white!important;
+    color: #222E61;
+  }
 }
 
 .popup-notif {
@@ -178,6 +195,18 @@ button {
   padding: 5px 10px;
   border: solid 1pt #e5e9f2;
   border-radius: 12px;
+  font-size: 14px;
+  font-weight: 400;
+  font-family: "BrandonText-Regular"
+}
+
+.search-field {
+  position: relative;
+  width: 50%;
+  height: 36px;
+  padding: 5px 10px;
+  border: solid 1pt #e5e9f2;
+  border-radius: 8px;
   font-size: 14px;
   font-weight: 400;
   font-family: "BrandonText-Regular"
