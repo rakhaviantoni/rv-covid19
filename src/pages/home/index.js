@@ -99,17 +99,17 @@ class Home extends React.Component {
                     <h2 style={{textAlign:'center'}}>{numberToMoneyWithoutPrefix(item.deaths)}{item.critical?` (+${numberToMoneyWithoutPrefix(item.todayDeaths)})`:''}</h2>
                   </Flex.Item>
                 </Flex>
-                <Flex style={{margin:'-8px'}}>
+                <Flex style={{margin:'-10px'}}>
                   <Flex.Item>
-                    <h2 style={{textAlign:'center',marginBottom:'-8px'}}>Active</h2>
+                    <h2 style={{textAlign:'center',marginBottom:'-10px'}}>Active</h2>
                     <h3 style={{textAlign:'center'}}>{numberToMoneyWithoutPrefix(item.active)}</h3>
                   </Flex.Item>
                   <Flex.Item>
-                    <h2 style={{textAlign:'center',marginBottom:'-8px'}}>Recovered</h2>
+                    <h2 style={{textAlign:'center',marginBottom:'-10px'}}>Recovered</h2>
                     <h3 style={{textAlign:'center'}}>{numberToMoneyWithoutPrefix(item.recovered)}</h3>
                   </Flex.Item>
                   <Flex.Item>
-                    <h2 style={{textAlign:'center',marginBottom:'-8px'}}>Critical</h2>
+                    <h2 style={{textAlign:'center',marginBottom:'-10px'}}>Critical</h2>
                     <h3 style={{textAlign:'center'}}>{item.critical?numberToMoneyWithoutPrefix(item.critical):'-'}</h3>
                   </Flex.Item>
                 </Flex>
