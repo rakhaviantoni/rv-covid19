@@ -1,9 +1,11 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom'
 import { numberToMoneyWithoutPrefix } from '../../utils/formatter/currency'
-import { Flex, Toast, WhiteSpace } from 'antd-mobile';
-import { Icon } from '@iconify/react';
-import close from '@iconify/icons-ant-design/close-circle-outlined';
+import { Flex, Toast } from 'antd-mobile'
+import { Icon } from '@iconify/react'
+import topArrow from '@iconify/icons-emojione-v1/top-arrow'
+// import close from '@iconify/icons-ant-design/close-circle-outlined';
+import BackToTop from 'react-back-to-top-button'
 
 class Home extends React.Component {
   timeoutSearch = undefined;
@@ -15,11 +17,12 @@ class Home extends React.Component {
       list: [],
       search_text: '',
       isLoading: true,
-      visiblePopup: false,
-      visibleConfirm: false,
-      visibleAdd: false,
-      visibleEdit: false,
-      visibleDelete: false
+      isBottom: false,
+      // visiblePopup: false,
+      // visibleConfirm: false,
+      // visibleAdd: false,
+      // visibleEdit: false,
+      // visibleDelete: false
     };
   }
 
@@ -28,6 +31,7 @@ class Home extends React.Component {
   }
 
   async fetchCovidList() {
+    Toast.loading('Loading...', 1000, null, true)
     const res = await fetch(`https://corona.lmao.ninja/all`);
     let all = await res.json();
     all.country = 'Worldwide'
@@ -40,59 +44,16 @@ class Home extends React.Component {
       country.long = country.countryInfo.long
     });
     let data = [all, ...countries]
-    this.setState({ list: data });
+    this.setState({ list: data })
+    Toast.hide()
   }
 
   delaySearch = (e) => {
-    // let { list, search_text } = this.state
     this.setState({search_text:e.target.value})
-    // if(this.timeoutSearch){
-    //   clearTimeout(this.timeoutSearch);
-    // }
-    // this.timeoutSearch = setTimeout(() => {
-    //   if(search_text.length > 0) {
-    //     let data = list.filter(t => t.country.includes(search_text))
-    //     this.setState({ list: data });
-    //   }
-    // }, 500);
-  }
-
-  onChange = (e, fname) => {
-    let { form, carform } = this.state
-    form[fname] = e.target.value
-    carform[fname] = e.target.value
-    this.setState({ form, carform })
-  }
-
-  handleSubmit = (e) => {
-    e.preventDefault()
   }
 
   render() {
-
-    let { data, list, form, carform, selectedDay, visiblePopup, visibleConfirm, visibleAdd, visibleEdit, visibleDelete } = this.state
-    
-    const handleTogglePopup = (value, data) => {
-      this.setState({ visiblePopup: value, data, form: { registration_no: data.registration_no ? data.registration_no : '', customer: '' } })
-    }
-    
-    const handleToggleConfirm = (value, data) => {
-      this.setState({ visibleConfirm: value, data, selectedDay })
-    }
-    
-    const handleToggleAdd = (value) => {
-      this.setState({ visibleAdd: value, carform: { registration_no: '', color: '' } })
-    }
-    const handleToggleEdit = (value, data) => {
-      this.setState({ visibleEdit: value, data, carform: { registration_no: data.registration_no ? data.registration_no : '', color: data.color ? data.color : '' } })
-    }
-    const handleToggleDelete = (value, data) => {
-      this.setState({ visibleDelete: value, data, carform: { registration_no: data.registration_no ? data.registration_no : '', color: data.color ? data.color : '' } })
-    }
-    // const handleSignout = e => {
-    //   BACK_TO_LOGIN(true)
-    // }
-
+    let { list } = this.state
     return (
       <React.Fragment>
         <section className="section-home">
@@ -101,11 +62,11 @@ class Home extends React.Component {
               <div className="title">
                 Track the Coronavirus disease (COVID-19) by Rakha Viantoni
               </div>
-              <div className="profile" style={{ display: 'flex', justifyContent: 'space-between' }}>
+              {/* <div className="profile" style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <button className="btn-menu" onClick={ handleToggleAdd } style={{ paddingRight: 0, marginLeft: 5 }}>
-                  {/* <Icon icon={add} color="white" heihgt="30" width="30" /> */}
+                  <Icon icon={add} color="white" heihgt="30" width="30" />
                 </button>
-              </div>
+              </div> */}
             </div>
             <div style={{ marginTop: 30, marginBottom: -20, textAlign: 'center', color: 'white' }}>
               <div className="input-container">
@@ -114,11 +75,11 @@ class Home extends React.Component {
             </div>
           </div>
           { 
-            list = list.filter((data)=>{
+            list.filter((data) => {
               if(this.state.search_text == null)
-                  return data
+                return data
               else if(data.country.toLowerCase().includes(this.state.search_text.toLowerCase())){
-                  return data
+                return data
               }
             }).map((item, key) => 
               <div className="body" key={ key }>
@@ -135,11 +96,11 @@ class Home extends React.Component {
                 <Flex>
                   <Flex.Item>
                     <h1 style={{textAlign:'center'}}>Cases</h1>
-                    <h2 style={{textAlign:'center'}}>{numberToMoneyWithoutPrefix(item.cases)}{item.critical?`(+${numberToMoneyWithoutPrefix(item.todayCases)})`:''}</h2>
+                    <h2 style={{textAlign:'center'}}>{numberToMoneyWithoutPrefix(item.cases)}{item.critical?` (+${numberToMoneyWithoutPrefix(item.todayCases)})`:''}</h2>
                   </Flex.Item>
                   <Flex.Item>
                     <h1 style={{textAlign:'center'}}>Deaths</h1>
-                    <h2 style={{textAlign:'center'}}>{numberToMoneyWithoutPrefix(item.deaths)}{item.critical?`(+${numberToMoneyWithoutPrefix(item.todayDeaths)})`:''}</h2>
+                    <h2 style={{textAlign:'center'}}>{numberToMoneyWithoutPrefix(item.deaths)}{item.critical?` (+${numberToMoneyWithoutPrefix(item.todayDeaths)})`:''}</h2>
                   </Flex.Item>
                 </Flex>
                 <Flex>
@@ -168,9 +129,16 @@ class Home extends React.Component {
               </div>
             )
           }
+          <BackToTop
+            showAt={300}
+            speed={150}
+            easing="easeInOutQuint"
+          >
+            <Icon icon={topArrow} />
+          </BackToTop>
         </section>
 
-        <div className={ visibleConfirm ? "popup active" : "popup" } >
+        {/* <div className={ visibleConfirm ? "popup active" : "popup" } >
           <div className="content">
             { visibleConfirm && 
             <button className="btn-close" onClick={ e => handleToggleConfirm(false, {}) }>
@@ -202,7 +170,7 @@ class Home extends React.Component {
               Yes
             </button>
           </div>
-        </div>
+        </div> */}
       </React.Fragment>
     );
   }

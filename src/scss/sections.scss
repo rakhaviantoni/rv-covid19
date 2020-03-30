@@ -8,7 +8,7 @@
       // display: grid;
       // grid-template-columns: 160px 60px;
       // grid-column-gap: 91px;
-      background-image: linear-gradient(315deg, #5851db 0%, #405de6 30%);
+      background-image: linear-gradient(315deg, #303C6F 0%, #222E61 30%);
 
       .title {
         font-size: 24px;
@@ -42,7 +42,7 @@
     .body {
       position: relative;
       color: #333333;
-      background-color: #e1306c;
+      background-color: #FF444E;
       border-radius: 8px;
       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
       margin: auto;
@@ -50,15 +50,15 @@
       min-width: 250px;
       max-width: 665px;
       margin: 0 auto;
-      padding: 10px;
+      padding: 12px;
       &:nth-child(3n+1) {
-        background-color: #405de6;
+        background-color: #3399FF;
       }
       &:nth-child(3n+2) {
         background-color: #fcaf45;
       }
       &:nth-child(3n+3) {
-        background-color: #e1306c;
+        background-color: #FF444E;
       }
       &:not(:first-child) {
         margin-top: 30px;
@@ -121,7 +121,7 @@
         margin: 0 20px;
       }
       h1 {
-        font-size: 5.9vw;
+        font-size: 5.5vw;
       }
       h2 {
         font-size: 3.0vh;
@@ -136,13 +136,13 @@
         margin: 0 20px;
       }
       h1 {
-        font-size: 5.9vw;
+        font-size: 5.5vw;
       }
       h2 {
-        font-size: 2.75vh;
+        font-size: 2.5vh;
       }
       h3 {
-        font-size: 2.25vh;
+        font-size: 2.0vh;
       }
     }
 
