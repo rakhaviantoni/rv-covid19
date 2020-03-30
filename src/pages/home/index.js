@@ -75,13 +75,9 @@ class Home extends React.Component {
             </div>
           </div>
           { 
-            list.filter((data) => {
-              if(this.state.search_text == null)
-                return data
-              else if(data.country.toLowerCase().includes(this.state.search_text.toLowerCase())){
-                return data
-              }
-            }).map((item, key) => 
+            list.filter(data => 
+              this.state.search_text == null || data.country.toLowerCase().includes(this.state.search_text.toLowerCase())
+            ).map((item, key) => 
               <div className="body" key={ key }>
                 <div className="action">
                   {/* <Icon icon={editIcon} color="white" heihgt="30" width="30" onClick={ e => handleToggleEdit(true, item) } />
@@ -133,6 +129,7 @@ class Home extends React.Component {
             showAt={300}
             speed={150}
             easing="easeInOutQuint"
+            style={{right:'-25px',bottom:'-25px'}}
           >
             <Icon icon={topArrow} />
           </BackToTop>
