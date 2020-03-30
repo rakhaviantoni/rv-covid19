@@ -89,27 +89,27 @@ class Home extends React.Component {
                 <div className="desc">
                 Last Updated: {Date(item.updated)}
                 </div>
-                <Flex>
+                <Flex style={{margin:'-8px'}}>
                   <Flex.Item>
-                    <h1 style={{textAlign:'center'}}>Cases</h1>
+                    <h1 style={{textAlign:'center',marginBottom:'-8px'}}>Cases</h1>
                     <h2 style={{textAlign:'center'}}>{numberToMoneyWithoutPrefix(item.cases)}{item.critical?` (+${numberToMoneyWithoutPrefix(item.todayCases)})`:''}</h2>
                   </Flex.Item>
                   <Flex.Item>
-                    <h1 style={{textAlign:'center'}}>Deaths</h1>
+                    <h1 style={{textAlign:'center',marginBottom:'-8px'}}>Deaths</h1>
                     <h2 style={{textAlign:'center'}}>{numberToMoneyWithoutPrefix(item.deaths)}{item.critical?` (+${numberToMoneyWithoutPrefix(item.todayDeaths)})`:''}</h2>
                   </Flex.Item>
                 </Flex>
-                <Flex>
+                <Flex style={{margin:'-8px'}}>
                   <Flex.Item>
-                    <h2 style={{textAlign:'center'}}>Active</h2>
+                    <h2 style={{textAlign:'center',marginBottom:'-8px'}}>Active</h2>
                     <h3 style={{textAlign:'center'}}>{numberToMoneyWithoutPrefix(item.active)}</h3>
                   </Flex.Item>
                   <Flex.Item>
-                    <h2 style={{textAlign:'center'}}>Recovered</h2>
+                    <h2 style={{textAlign:'center',marginBottom:'-8px'}}>Recovered</h2>
                     <h3 style={{textAlign:'center'}}>{numberToMoneyWithoutPrefix(item.recovered)}</h3>
                   </Flex.Item>
                   <Flex.Item>
-                    <h2 style={{textAlign:'center'}}>Critical</h2>
+                    <h2 style={{textAlign:'center',marginBottom:'-8px'}}>Critical</h2>
                     <h3 style={{textAlign:'center'}}>{item.critical?numberToMoneyWithoutPrefix(item.critical):'-'}</h3>
                   </Flex.Item>
                 </Flex>
