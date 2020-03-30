@@ -144,16 +144,16 @@ class Home extends React.Component {
                 </Flex>
                 <Flex>
                   <Flex.Item>
-                    <h1 style={{textAlign:'center'}}>Active</h1>
-                    <h2 style={{textAlign:'center'}}>{numberToMoneyWithoutPrefix(item.active)}</h2>
+                    <h2 style={{textAlign:'center'}}>Active</h2>
+                    <h3 style={{textAlign:'center'}}>{numberToMoneyWithoutPrefix(item.active)}</h3>
                   </Flex.Item>
                   <Flex.Item>
-                    <h1 style={{textAlign:'center'}}>Recovered</h1>
-                    <h2 style={{textAlign:'center'}}>{numberToMoneyWithoutPrefix(item.recovered)}</h2>
+                    <h2 style={{textAlign:'center'}}>Recovered</h2>
+                    <h3 style={{textAlign:'center'}}>{numberToMoneyWithoutPrefix(item.recovered)}</h3>
                   </Flex.Item>
                   <Flex.Item>
-                    <h1 style={{textAlign:'center'}}>Critical</h1>
-                    <h2 style={{textAlign:'center'}}>{item.critical?numberToMoneyWithoutPrefix(item.critical):'-'}</h2>
+                    <h2 style={{textAlign:'center'}}>Critical</h2>
+                    <h3 style={{textAlign:'center'}}>{item.critical?numberToMoneyWithoutPrefix(item.critical):'-'}</h3>
                   </Flex.Item>
                 </Flex>
                 {/* {

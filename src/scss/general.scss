@@ -211,3 +211,9 @@ button {
   font-weight: 400;
   font-family: "BrandonText-Regular"
 }
+
+@media only screen and (max-width: 335px) {
+  .search-field {
+    width: 100%;
+  }
+}

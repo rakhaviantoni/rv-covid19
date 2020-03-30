@@ -110,6 +110,31 @@
         max-width: 335px;
         margin: 0 20px;
       }
+      h1 {
+        font-size: 5.9vw;
+      }
+      h2 {
+        font-size: 3.0vh;
+      }
+      h3 {
+        font-size: 2.5vh;
+      }
+    }
+
+    @media only screen and (max-width: 767px) {
+      .body{
+        max-width: 767px;
+        margin: 0 20px;
+      }
+      h1 {
+        font-size: 5.9vw;
+      }
+      h2 {
+        font-size: 2.75vh;
+      }
+      h3 {
+        font-size: 2.25vh;
+      }
     }
 
   }
