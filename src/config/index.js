@@ -1,7 +1,7 @@
 let apiUrl = process.env.REACT_APP_API_URL
 let apiVersion = process.env.REACT_APP_API_VERSION
 let apiKey = process.env.REACT_APP_API_KEY
-let siteUrl = ''
+let siteUrl = '/'
 
 if(!process.env.DEVELOPMENT){
   apiUrl = process.env.REACT_APP_API_URL_PROD
