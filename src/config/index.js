@@ -14,13 +14,9 @@ export const API_KEY = apiKey
 export const API_URL = `${apiUrl}${apiVersion}`
 
 export const SITE_COOKIES = { 
-  TOKEN: '_CarRentalToken',
-  USERNAME: '_CarRentalUsername'
 }
 
 export const MENU = {
-  REGISTER: `${SITE_URL}/register`,
-  LOGIN: `${SITE_URL}/login`,
   APP: `${SITE_URL}/app`
 }
 

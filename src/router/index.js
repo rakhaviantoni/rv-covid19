@@ -1,12 +1,14 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import ReactGA from 'react-ga'
 
 // import PrivateRouter from './private-router'
 import { SITE_URL, MENU } from '../config'
 
-// import Register from '../pages/register';
-// import Login from '../pages/login';
-import Home from '../pages/home';
+import Home from '../pages/home'
+
+ReactGA.initialize('G-R07JYHBM1M')
+ReactGA.pageview(SITE_URL)
 
 const AppRoute = (
   <Router>
