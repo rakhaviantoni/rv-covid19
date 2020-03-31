@@ -7,7 +7,7 @@ import { SITE_URL, MENU } from '../config'
 
 import Home from '../pages/home'
 
-ReactGA.initialize('G-R07JYHBM1M')
+ReactGA.initialize('UA-72989917-1')
 ReactGA.pageview(SITE_URL)
 
 const AppRoute = (
