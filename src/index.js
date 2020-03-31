@@ -13,6 +13,7 @@ const tagManagerArgs = {
 
 TagManager.initialize(tagManagerArgs)
 ReactGA.initialize('G-R07JYHBM1M')
+ReactGA.pageview(window.location.pathname + window.location.search)
 
 ReactDOM.render(AppRoute, document.getElementById('root'));
 
