@@ -15,6 +15,7 @@ class Home extends React.Component {
     this.state = {
       data: {},
       list: [],
+      lastUpdate: '',
       searchText: '',
       sortText: 'cases',
       isLoading: true,
@@ -42,7 +43,7 @@ class Home extends React.Component {
       country.long = country.countryInfo.long
     });
     let data = [all, ...countries]
-    this.setState({ list: data })
+    this.setState({ list: data, lastUpdate: all.updated })
     Toast.hide()
   }
 
@@ -57,6 +58,7 @@ class Home extends React.Component {
 
   render() {
     let { list, 
+      lastUpdate 
       // visibleDetail 
     } = this.state
     // const handleToggleDetail = (value, data) => {
@@ -68,7 +70,8 @@ class Home extends React.Component {
           <div className="header" style={{ paddingLeft: 20, paddingRight: 20, paddingTop: 30 }}>
             <div  style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start' }}>
               <div className="title">
-                Track the Coronavirus disease (COVID-19) by Rakha Viantoni
+                Track the Coronavirus disease (COVID-19) by Rakha Viantoni<br/>
+                <span className="sub-title">{Date(lastUpdate)}</span>
               </div>
               {/* <div className="profile" style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <button className="btn-menu" onClick={ handleToggleAdd } style={{ paddingRight: 0, marginLeft: 5 }}>
@@ -105,9 +108,9 @@ class Home extends React.Component {
                 <div className="title">
                   {item.country}&nbsp;<div className="circle" title={item.color} style={{backgroundImage:`url(${item.flag})`}}></div>
                 </div>
-                <div className="desc">
+                {/* <div className="desc">
                 Last Updated: {Date(item.updated)}
-                </div>
+                </div> */}
                 <Flex style={{margin:'-8px'}}>
                   <Flex.Item>
                     <h1 style={{textAlign:'center',marginBottom:'-8px'}}>Cases</h1>
