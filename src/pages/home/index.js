@@ -4,7 +4,7 @@ import { numberToMoneyWithoutPrefix } from '../../utils/formatter/currency'
 import { Flex, Toast } from 'antd-mobile'
 import { Icon } from '@iconify/react'
 import topArrow from '@iconify/icons-emojione-v1/top-arrow'
-import close from '@iconify/icons-ant-design/close-circle-outlined';
+// import close from '@iconify/icons-ant-design/close-circle-outlined';
 import BackToTop from 'react-back-to-top-button'
 
 class Home extends React.Component {
@@ -95,7 +95,9 @@ class Home extends React.Component {
             list.filter(data => 
               this.state.searchText == null || data.country.toLowerCase().includes(this.state.searchText.toLowerCase())
             ).map((item, key) => 
-              <div className="body" key={key} onClick={ e => handleToggleDetail(true, item) }>
+              <div className="body" key={key} 
+                // onClick={ e => handleToggleDetail(true, item) }
+              >
                 <div className="action">
                   {/* <Icon icon={editIcon} color="white" heihgt="30" width="30" onClick={ e => handleToggleEdit(true, item) } />
                   <Icon icon={deleteIcon} color="white" heihgt="30" width="30" onClick={ e => handleToggleDelete(true, item) } /> */}
