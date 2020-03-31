@@ -119,6 +119,9 @@
       .body{
         max-width: 335px;
         margin: 0 20px;
+        &:not(:first-child) {
+          margin-top: 20px;
+        }
       }
       h1 {
         font-size: 5.5vw;

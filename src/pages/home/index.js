@@ -15,7 +15,8 @@ class Home extends React.Component {
     this.state = {
       data: {},
       list: [],
-      search_text: '',
+      searchText: '',
+      sortText: 'cases',
       isLoading: true,
       isBottom: false,
       // visiblePopup: false,
@@ -30,13 +31,14 @@ class Home extends React.Component {
     this.fetchCovidList()
   }
 
-  async fetchCovidList() {
+  async fetchCovidList(sort) {
+    let { sortText } = this.state
     Toast.loading('Loading...', 1000, null, true)
-    const res = await fetch(`https://corona.lmao.ninja/all`);
-    let all = await res.json();
+    const res = await fetch(`https://corona.lmao.ninja/all/`)
+    let all = await res.json()
     all.country = 'Worldwide'
-    const resp = await fetch(`https://corona.lmao.ninja/countries`);
-    let countries = await resp.json();
+    const resp = await fetch(`https://corona.lmao.ninja/countries/?sort=${sort?sort:sortText}`)
+    let countries = await resp.json()
     countries.forEach(country => {
       country.nick = country.countryInfo.iso2
       country.flag = country.countryInfo.flag
@@ -48,8 +50,13 @@ class Home extends React.Component {
     Toast.hide()
   }
 
-  delaySearch = (e) => {
-    this.setState({search_text:e.target.value})
+  searchBy = (e) => {
+    this.setState({searchText:e.target.value})
+  }
+
+  sortBy = (e) => {
+    this.setState({sortText:e.target.value})
+    this.fetchCovidList(e.target.value)
   }
 
   render() {
@@ -70,13 +77,22 @@ class Home extends React.Component {
             </div>
             <div style={{ marginTop: 30, marginBottom: -20, textAlign: 'center', color: 'white' }}>
               <div className="input-container">
-                <input type="text" className="search-field" placeholder="Search" onChange={ e => this.delaySearch(e) } />
+                <input type="text" className="search-field" placeholder="Search" onChange={ e => this.searchBy(e) } />
+                <select className="select-field" onChange={ e => this.sortBy(e) }>
+                  <option value="cases">Sort By Cases</option>
+                  <option value="todayCases">Sort By Today Cases</option>
+                  <option value="deaths">Sort By Deaths</option>
+                  <option value="todayDeaths">Sort By Today Deaths</option>
+                  <option value="recovered">Sort By Recovered</option>
+                  <option value="active">Sort By Active</option>
+                  <option value="critical">Sort By Critical</option>
+                </select>
               </div>
             </div>
           </div>
           { 
             list.filter(data => 
-              this.state.search_text == null || data.country.toLowerCase().includes(this.state.search_text.toLowerCase())
+              this.state.searchText == null || data.country.toLowerCase().includes(this.state.searchText.toLowerCase())
             ).map((item, key) => 
               <div className="body" key={ key }>
                 <div className="action">

@@ -200,20 +200,26 @@ button {
   font-family: "BrandonText-Regular"
 }
 
-.search-field {
+.search-field, .select-field {
   position: relative;
-  width: 50%;
+  width: 25%;
   height: 36px;
   padding: 5px 10px;
   border: solid 1pt #e5e9f2;
   border-radius: 8px;
   font-size: 14px;
   font-weight: 400;
-  font-family: "BrandonText-Regular"
+  font-family: "BrandonText-Regular";
+  &:not(:first-child) {
+    left: 2%;
+  }
 }
 
 @media only screen and (max-width: 767px) {
   .search-field {
-    width: 100%;
+    width: 55%;
+  }
+  .select-field {
+    width: 45%;
   }
 }
