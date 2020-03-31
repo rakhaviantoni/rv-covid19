@@ -4,8 +4,9 @@ import { numberToMoneyWithoutPrefix } from '../../utils/formatter/currency'
 import { Flex, Toast } from 'antd-mobile'
 import { Icon } from '@iconify/react'
 import topArrow from '@iconify/icons-emojione-v1/top-arrow'
-// import close from '@iconify/icons-ant-design/close-circle-outlined';
+import close from '@iconify/icons-ant-design/close-circle-outlined';
 import BackToTop from 'react-back-to-top-button'
+import Chart from 'react-google-charts'
 
 class Home extends React.Component {
   timeoutSearch = undefined;
@@ -20,7 +21,7 @@ class Home extends React.Component {
       sortText: 'cases',
       isLoading: true,
       isBottom: false,
-      // visibleDetail: false
+      visibleDetail: false
     };
   }
 
@@ -57,13 +58,53 @@ class Home extends React.Component {
   }
 
   render() {
-    let { list, 
-      lastUpdate 
-      // visibleDetail 
+    let { 
+      data, 
+      list, 
+      lastUpdate ,
+      visibleDetail 
     } = this.state
-    // const handleToggleDetail = (value, data) => {
-    //   this.setState({ visibleDetail: value, data })
-    // }
+    const handleToggleDetail = (value, data) => {
+      this.setState({ visibleDetail: value, data })
+    }
+    const pieOptions = {
+      title: "",
+      pieHole: 0.5,
+      slices: [
+        {
+          color: "#FED766"
+        },
+        {
+          color: "#2BB673"
+        },
+        {
+          color: "#FF7900"
+        },
+        {
+          color: "#FF444E"
+        }
+      ],
+      pieSliceTextStyle: {
+        color: '233238'
+      },
+      legend: {
+        position: "bottom",
+        alignment: "center",
+        textStyle: {
+          color: "233238",
+          fontSize: 14
+        }
+      },
+      tooltip: {
+        showColorCode: true
+      },
+      chartArea: {
+        left: 0,
+        top: 50,
+        width: "100%",
+        height: "60%"
+      }
+    }
     return (
       <React.Fragment>
         <section className="section-home">
@@ -99,7 +140,7 @@ class Home extends React.Component {
               this.state.searchText == null || data.country.toLowerCase().includes(this.state.searchText.toLowerCase())
             ).map((item, key) => 
               <div className="body" key={key} 
-                // onClick={ e => handleToggleDetail(true, item) }
+                onClick={ e => handleToggleDetail(true, item) }
               >
                 <div className="action">
                   {/* <Icon icon={editIcon} color="white" heihgt="30" width="30" onClick={ e => handleToggleEdit(true, item) } />
@@ -174,15 +215,31 @@ class Home extends React.Component {
           </div>
         </div> */}
 
-        {/* <div className={ visibleDetail ? "popup active" : "popup" } >
+        <div className={ visibleDetail ? "popup active" : "popup" } >
           <div className="content">
             { visibleDetail && 
             <button className="btn-close" onClick={ e => handleToggleDetail(false, {}) }>
               <Icon icon={close} color="white" width="30" height="30" />
             </button>
             }
+            <div className="title">
+              {data.country}&nbsp;<div className="circle" title={data.color} style={{backgroundImage:`url(${data.flag})`}}></div>
+            </div>
+            <Chart
+              chartType="PieChart"
+              data={[["Active", "Recovered"], ["Active", data.active], ["Recovered", data.recovered], ["Critical", data.critical], ["Death", data.deaths]]}
+              options={pieOptions}
+              graph_id="donutchart"
+              width={"100%"}
+              height={"400px"}
+              legend_toggle
+            />
+            <div id="labelOverlay">
+              <p class="title">{numberToMoneyWithoutPrefix(data.cases)}</p>
+              <p class="sub-title">cases</p>
+            </div>
           </div>
-        </div> */}
+        </div>
       </React.Fragment>
     );
   }
