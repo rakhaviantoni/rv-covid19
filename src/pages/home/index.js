@@ -4,7 +4,7 @@ import { numberToMoneyWithoutPrefix } from '../../utils/formatter/currency'
 import { Flex, Toast } from 'antd-mobile'
 import { Icon } from '@iconify/react'
 import topArrow from '@iconify/icons-emojione-v1/top-arrow'
-// import close from '@iconify/icons-ant-design/close-circle-outlined';
+import close from '@iconify/icons-ant-design/close-circle-outlined';
 import BackToTop from 'react-back-to-top-button'
 
 class Home extends React.Component {
@@ -19,11 +19,7 @@ class Home extends React.Component {
       sortText: 'cases',
       isLoading: true,
       isBottom: false,
-      // visiblePopup: false,
-      // visibleConfirm: false,
-      // visibleAdd: false,
-      // visibleEdit: false,
-      // visibleDelete: false
+      // visibleDetail: false
     };
   }
 
@@ -60,7 +56,12 @@ class Home extends React.Component {
   }
 
   render() {
-    let { list } = this.state
+    let { list, 
+      // visibleDetail 
+    } = this.state
+    // const handleToggleDetail = (value, data) => {
+    //   this.setState({ visibleDetail: value, data })
+    // }
     return (
       <React.Fragment>
         <section className="section-home">
@@ -94,7 +95,7 @@ class Home extends React.Component {
             list.filter(data => 
               this.state.searchText == null || data.country.toLowerCase().includes(this.state.searchText.toLowerCase())
             ).map((item, key) => 
-              <div className="body" key={ key }>
+              <div className="body" key={key} onClick={ e => handleToggleDetail(true, item) }>
                 <div className="action">
                   {/* <Icon icon={editIcon} color="white" heihgt="30" width="30" onClick={ e => handleToggleEdit(true, item) } />
                   <Icon icon={deleteIcon} color="white" heihgt="30" width="30" onClick={ e => handleToggleDelete(true, item) } /> */}
@@ -166,22 +167,15 @@ class Home extends React.Component {
               Yes
             </button>
           </div>
-        </div>
+        </div> */}
 
-        <div className={ visibleDelete ? "popup active" : "popup" } >
+        {/* <div className={ visibleDetail ? "popup active" : "popup" } >
           <div className="content">
-            { visibleDelete && 
-            <button className="btn-close" onClick={ e => handleToggleDelete(false, {}) }>
+            { visibleDetail && 
+            <button className="btn-close" onClick={ e => handleToggleDetail(false, {}) }>
               <Icon icon={close} color="white" width="30" height="30" />
             </button>
             }
-            <div className="title">Delete {data.registration_no}?</div>
-            <button className="btn-confirmation" onClick={ e => handleToggleDelete(false, {}) }>
-              No
-            </button>
-            <button className="btn-confirmation--outline" onClick={ e => this.handleDelete(e) }>
-              Yes
-            </button>
           </div>
         </div> */}
       </React.Fragment>
