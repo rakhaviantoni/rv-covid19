@@ -145,11 +145,11 @@ class Home extends React.Component {
                 <Title/><br/>
                 <span className="sub-title">{lang==='en'?enDatetimeToLocalDetail(lastUpdate):datetimeToLocalDetail(lastUpdate)}</span>
               </div>
-              <div className="profile" style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <div className="language" style={{ display: 'flex', justifyContent: 'space-between' }}>
                 {/* <button className="btn-menu" onClick={ handleToggleDetail } style={{ paddingRight: 0, marginLeft: 5 }}>
                   <Icon icon={close} color="white" height="30" width="30" />
                 </button> */}
-                <select className="language" onChange={ e => this.changeLang(e) }>
+                <select className="language-select" onChange={ e => this.changeLang(e) }>
                   <option value="en">EN</option>
                   <option value="id">ID</option>
                 </select>
