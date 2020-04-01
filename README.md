@@ -7,7 +7,7 @@
 
 Track the Coronavirus disease (COVID-19) or the Novel Coronavirus Strain.
 
-[![Website](https://img.shields.io/badge/WEBSITE.pro%20%E2%86%92-gray.svg?colorB=007C92&style=flat)](https://rakhaviantoni.com/) [![Follow @RakhaViantoni on Twitter](https://img.shields.io/badge/FOLLOW%20@RAKHAVIANTONI%20%E2%86%92-gray.svg?colorA=007C92&colorB=007C92&style=flat)](https://twitter.com/rakhaviantoni/)
+[![Website](https://img.shields.io/badge/-WEBSITE.pro%20%E2%86%92-gray.svg?colorB=007C92&style=flat)](https://rakhaviantoni.com/) [![Follow @RakhaViantoni on Twitter](https://img.shields.io/badge/FOLLOW%20@RAKHAVIANTONI%20%E2%86%92-gray.svg?colorA=007C92&colorB=007C92&style=flat)](https://twitter.com/rakhaviantoni/)
 
 </h4>
 
@@ -232,6 +232,6 @@ yarn start
 <div align="left">
     <p><a href="https://github.com/rakhaviantoni"><img alt="GitHub @RakhaViantoni" align="center" src="https://img.shields.io/badge/GITHUB-gray.svg?colorB=6cc644&colorA=6cc644&style=flat" /></a>&nbsp;<small><strong>(follow)</strong> To stay up to date on free & open-source software</small></p>
     <p><a href="https://twitter.com/RakhaViantoni/"><img alt="Twitter @RakhaViantoni" align="center" src="https://img.shields.io/badge/TWITTER-gray.svg?colorB=1da1f2&colorA=1da1f2&style=flat" /></a>&nbsp;<small><strong>(follow)</strong> To get daily memes</small></p>
-    <p><a href="https://AhmadAwais.com/"><img alt="Blog: AhmadAwais.com" align="center" src="https://img.shields.io/badge/WEBSITE-gray.svg?colorB=4D2AFF&colorA=4D2AFF&style=flat" /></a>&nbsp;<small><strong>(visit)</strong> To know more about me</small></p>
+    <p><a href="https://rakhaviantoni.com/"><img alt="rakhaviantoni.com" align="center" src="https://img.shields.io/badge/-WEBSITE-gray.svg?colorB=4D2AFF&colorA=4D2AFF&style=flat" /></a>&nbsp;<small><strong>(visit)</strong> To know more about me</small></p>
     <p><a href="https://www.linkedin.com/in/RakhaViantoni/"><img alt="LinkedIn @RakhaViantoni" align="center" src="https://img.shields.io/badge/LINKEDIN-gray.svg?colorB=0077b5&colorA=0077b5&style=flat" /></a>&nbsp;<small><strong>(connect)</strong> On the LinkedIn profile</small></p>
 </div>
