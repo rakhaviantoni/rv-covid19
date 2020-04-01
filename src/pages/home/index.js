@@ -86,6 +86,11 @@ class Home extends React.Component {
     const handleToggleDetail = (value, data) => {
       this.setState({ visibleDetail: value, data })
     }
+    const handleAddToHomescreenClick = () => {
+      alert(`
+        1. Open Share menu
+        2. Tap on "Add to Home Screen" button`);
+    }
     const pieOptions = {
       title: "",
       pieHole: 0.5,
@@ -126,16 +131,20 @@ class Home extends React.Component {
     }
     return (
       <React.Fragment>
-      <Helmet>
-        <Translation>
-          {
-            (t) => <>
-              <title>{t('Title')}</title>
-              <meta name="description" content={t('Desc')} />
-            </>
-          }
-        </Translation>
-      </Helmet>
+        <Helmet>
+          <Translation>
+            {
+              (t) => <>
+                <title>{t('Title')}</title>
+                <meta name="description" content={t('Desc')} />
+              </>
+            }
+          </Translation>
+        </Helmet>
+        {
+          navigator.userAgent.match(/(iPhone|iPod|iPad)/i) &&
+          <AddToHomescreen onAddToHomescreenClick={handleAddToHomescreenClick} />
+        }
         <section className="section-home">
           <div className="header" style={{ paddingLeft: 20, paddingRight: 20, paddingTop: 30 }}>
             <div  style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start' }}>
