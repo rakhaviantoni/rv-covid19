@@ -180,7 +180,7 @@ button {
   font-family: "BrandonText-Regular"
 }
 
-.search-field, .select-field {
+input.search-field, select.select-field {
   position: relative;
   width: 25%;
   height: 36px;
@@ -195,17 +195,17 @@ button {
   }
 }
 
-.language-select {
+select.language-select {
   background: transparent;
   border: 0;
   color: white;
 }
 
 @media only screen and (max-width: 767px) {
-  .search-field {
+  input.search-field {
     width: 55%;
   }
-  .select-field {
+  select.select-field {
     width: 45%;
   }
 }
