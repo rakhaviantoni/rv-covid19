@@ -62,9 +62,19 @@
       font-size: 18px;
       position: absolute;
       top: 43%;
-      left: 36.5%;
+      left: 46.5%;
       text-align: center;
       cursor: default;
+    }
+    @media only screen and (max-width: 335px) {
+      #labelOverlay {
+        left: 33%;
+      }
+    }
+    @media only screen and (min-width: 335px) and (max-width: 767px) {
+      #labelOverlay {
+        left: 36.5%;
+      }
     }
 
     #labelOverlay p {
