@@ -15,7 +15,6 @@
     "i18next": "^19.3.4",
     "node-sass": "^4.13.1",
     "react": "^16.12.0",
-    "react-add-to-homescreen": "^1.1.0",
     "react-back-to-top-button": "^0.0.14",
     "react-dom": "^16.12.0",
     "react-ga": "^2.7.0",
