@@ -1,6 +1,9 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom'
+import { Helmet } from 'react-helmet'
 import { numberToMoneyWithoutPrefix } from '../../utils/formatter/currency'
+import { datetimeToLocalDetail } from '../../utils/formatter/datetime'
+import { enDatetimeToLocalDetail } from '../../utils/formatter/en-datetime'
 import { Flex, Toast } from 'antd-mobile'
 import { Icon } from '@iconify/react'
 import topArrow from '@iconify/icons-emojione-v1/top-arrow'
@@ -8,6 +11,15 @@ import close from '@iconify/icons-ant-design/close-circle-outlined';
 import info from '@iconify/icons-ant-design/info-circle-twotone';
 import BackToTop from 'react-back-to-top-button'
 import Chart from 'react-google-charts'
+import { Translation } from 'react-i18next'
+import i18n from '../../i18n'
+import Title from './component/title'
+import SortOption from './component/sortoption'
+import Cases from './component/cases'
+import Deaths from './component/deaths'
+import Active from './component/active'
+import Recovered from './component/recovered'
+import Critical from './component/critical'
 
 class Home extends React.Component {
   timeoutSearch = undefined;
@@ -18,6 +30,7 @@ class Home extends React.Component {
       data: {},
       list: [],
       lastUpdate: '',
+      lang: 'en', 
       searchText: '',
       sortText: 'cases',
       isLoading: true,
@@ -58,11 +71,18 @@ class Home extends React.Component {
     this.fetchCovidList(e.target.value)
   }
 
+  changeLang = (e) => {
+    this.setState({lang:e.target.value})
+    i18n.changeLanguage(e.target.value)
+    console.log(e.target.value)
+  }
+
   render() {
     let { 
       data, 
       list, 
       lastUpdate ,
+      lang, 
       visibleDetail 
     } = this.state
     const handleToggleDetail = (value, data) => {
@@ -108,30 +128,42 @@ class Home extends React.Component {
     }
     return (
       <React.Fragment>
+      <Helmet>
+        <Translation>
+          {
+            (t) => <>
+              <title>{t('Title')}</title>
+              <meta name="description" content={t('Desc')} />
+            </>
+          }
+        </Translation>
+      </Helmet>
         <section className="section-home">
           <div className="header" style={{ paddingLeft: 20, paddingRight: 20, paddingTop: 30 }}>
             <div  style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'start' }}>
               <div className="title">
-                Track the Coronavirus disease (COVID-19) by Rakha Viantoni<br/>
-                <span className="sub-title">{Date(lastUpdate)}</span>
+                <Title/><br/>
+                <span className="sub-title">{lang==='en'?enDatetimeToLocalDetail(lastUpdate):datetimeToLocalDetail(lastUpdate)}</span>
               </div>
-              {/* <div className="profile" style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <button className="btn-menu" onClick={ handleToggleAdd } style={{ paddingRight: 0, marginLeft: 5 }}>
-                  <Icon icon={add} color="white" heihgt="30" width="30" />
-                </button>
-              </div> */}
+              <div className="profile" style={{ display: 'flex', justifyContent: 'space-between' }}>
+                {/* <button className="btn-menu" onClick={ handleToggleDetail } style={{ paddingRight: 0, marginLeft: 5 }}>
+                  <Icon icon={close} color="white" height="30" width="30" />
+                </button> */}
+                <select className="language" onChange={ e => this.changeLang(e) }>
+                  <option value="en">EN</option>
+                  <option value="id">ID</option>
+                </select>
+              </div>
             </div>
             <div style={{ marginTop: 30, marginBottom: -20, textAlign: 'center', color: 'white' }}>
               <div className="input-container">
-                <input type="text" className="search-field" placeholder="Search" onChange={ e => this.searchBy(e) } />
+                <Translation>
+                  {
+                    (t) => <input type="text" className="search-field" placeholder={t('search')} onChange={ e => this.searchBy(e) } />
+                  }
+                </Translation>
                 <select className="select-field" onChange={ e => this.sortBy(e) }>
-                  <option value="cases">Sort By Cases</option>
-                  <option value="todayCases">Sort By Today Cases</option>
-                  <option value="deaths">Sort By Deaths</option>
-                  <option value="todayDeaths">Sort By Today Deaths</option>
-                  <option value="recovered">Sort By Recovered</option>
-                  <option value="active">Sort By Active</option>
-                  <option value="critical">Sort By Critical</option>
+                  <SortOption/>
                 </select>
               </div>
             </div>
@@ -155,25 +187,25 @@ class Home extends React.Component {
                 </div> */}
                 <Flex style={{margin:'-8px'}}>
                   <Flex.Item>
-                    <h1 style={{textAlign:'center',marginBottom:'-8px'}}>Cases</h1>
-                    <h2 style={{textAlign:'center'}}>{numberToMoneyWithoutPrefix(item.cases)}{item.critical?` (+${numberToMoneyWithoutPrefix(item.todayCases)})`:''}</h2>
+                    <h1 style={{textAlign:'center',marginBottom:'-8px'}}><Cases/></h1>
+                    <h2 style={{textAlign:'center'}}>{numberToMoneyWithoutPrefix(item.cases)}{item.todayCases?` (+${numberToMoneyWithoutPrefix(item.todayCases)})`:''}</h2>
                   </Flex.Item>
                   <Flex.Item>
-                    <h1 style={{textAlign:'center',marginBottom:'-8px'}}>Deaths</h1>
-                    <h2 style={{textAlign:'center'}}>{numberToMoneyWithoutPrefix(item.deaths)}{item.critical?` (+${numberToMoneyWithoutPrefix(item.todayDeaths)})`:''}</h2>
+                    <h1 style={{textAlign:'center',marginBottom:'-8px'}}><Deaths/></h1>
+                    <h2 style={{textAlign:'center'}}>{numberToMoneyWithoutPrefix(item.deaths)}{item.todayDeaths?` (+${numberToMoneyWithoutPrefix(item.todayDeaths)})`:''}</h2>
                   </Flex.Item>
                 </Flex>
                 <Flex style={{margin:'-10px'}}>
                   <Flex.Item>
-                    <h2 style={{textAlign:'center',marginBottom:'-10px'}}>Active</h2>
+                    <h2 style={{textAlign:'center',marginBottom:'-10px'}}><Active/></h2>
                     <h3 style={{textAlign:'center'}}>{numberToMoneyWithoutPrefix(item.active)}</h3>
                   </Flex.Item>
                   <Flex.Item>
-                    <h2 style={{textAlign:'center',marginBottom:'-10px'}}>Recovered</h2>
+                    <h2 style={{textAlign:'center',marginBottom:'-10px'}}><Recovered/></h2>
                     <h3 style={{textAlign:'center'}}>{numberToMoneyWithoutPrefix(item.recovered)}</h3>
                   </Flex.Item>
                   <Flex.Item>
-                    <h2 style={{textAlign:'center',marginBottom:'-10px'}}>Critical</h2>
+                    <h2 style={{textAlign:'center',marginBottom:'-10px'}}><Critical/></h2>
                     <h3 style={{textAlign:'center'}}>{item.critical?numberToMoneyWithoutPrefix(item.critical):'-'}</h3>
                   </Flex.Item>
                 </Flex>
@@ -226,19 +258,26 @@ class Home extends React.Component {
             <div className="title">
               {data.country}&nbsp;<div className="circle" title={data.color} style={{backgroundImage:`url(${data.flag})`}}></div>
             </div>
-            <Chart
-              chartType="PieChart"
-              data={[["Active", "Recovered"], ["Active", data.active], ["Recovered", data.recovered], ["Critical", data.critical], ["Death", data.deaths]]}
-              options={pieOptions}
-              graph_id="donutchart"
-              width={"100%"}
-              height={"400px"}
-              legend_toggle
-            />
-            <div id="labelOverlay">
-              <p class="title">{numberToMoneyWithoutPrefix(data.cases)}</p>
-              <p class="sub-title">cases</p>
-            </div>
+            <Translation>
+              {
+                (t) => 
+                <>
+                  <Chart
+                    chartType="PieChart"
+                    data={[["Active", "Recovered"], [t('active'), data.active], [t('recovered'), data.recovered], [t('critical'), data.critical], [t('deaths'), data.deaths]]}
+                    options={pieOptions}
+                    graph_id="donutchart"
+                    width={"100%"}
+                    height={"400px"}
+                    legend_toggle
+                  />
+                  <div id="labelOverlay">
+                    <p class="title">{numberToMoneyWithoutPrefix(data.cases)}</p>
+                    <p class="sub-title">{t('cases')}</p>
+                  </div>
+                </>
+              }
+            </Translation>
           </div>
         </div>
       </React.Fragment>

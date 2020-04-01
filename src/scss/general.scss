@@ -215,6 +215,12 @@ button {
   }
 }
 
+.language {
+  background: transparent;
+  border: 0;
+  color: white;
+}
+
 @media only screen and (max-width: 767px) {
   .search-field {
     width: 55%;
