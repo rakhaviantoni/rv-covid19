@@ -4,14 +4,7 @@ import './index.scss';
 import 'antd-mobile/dist/antd-mobile.css';
 import AppRoute from './router'
 import * as serviceWorker from './serviceWorker';
-import TagManager from 'react-gtm-module'
 import './i18n';
- 
-const tagManagerArgs = {
-    gtmId: 'GTM-WQVG2C9'
-}
-
-TagManager.initialize(tagManagerArgs)
 
 ReactDOM.render(AppRoute, document.getElementById('root'));
 

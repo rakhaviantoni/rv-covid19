@@ -22,8 +22,6 @@ import Recovered from './component/recovered'
 import Critical from './component/critical'
 
 class Home extends React.Component {
-  timeoutSearch = undefined;
-  
   constructor(props) {
     super(props);
     this.state = {
