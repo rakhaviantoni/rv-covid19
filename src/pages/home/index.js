@@ -1,6 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
+import AddToHomescreen from 'react-add-to-homescreen'
 import { numberToMoneyWithoutPrefix } from '../../utils/formatter/currency'
 import { datetimeToLocalDetail } from '../../utils/formatter/datetime'
 import { enDatetimeToLocalDetail } from '../../utils/formatter/en-datetime'
