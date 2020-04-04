@@ -44,9 +44,9 @@ class Home extends React.Component {
   async fetchCovidList(sort) {
     let { sortText } = this.state
     Toast.loading('Loading...', 1000, null, true)
-    const res = await fetch(`https://corona.lmao.ninja/all/`)
-    let all = await res.json()
-    all.country = 'Worldwide'
+    // const res = await fetch(`https://corona.lmao.ninja/all/`)
+    // let all = await res.json()
+    // all.country = 'Worldwide'
     const resp = await fetch(`https://corona.lmao.ninja/countries/?sort=${sort?sort:sortText}`)
     let countries = await resp.json()
     countries.forEach(country => {
@@ -55,8 +55,8 @@ class Home extends React.Component {
       country.lat = country.countryInfo.lat
       country.long = country.countryInfo.long
     });
-    let data = [all, ...countries]
-    this.setState({ list: data, lastUpdate: all.updated })
+    // let data = [all, ...countries]
+    this.setState({ list: countries, lastUpdate: countries[0].updated })
     Toast.hide()
   }
 
