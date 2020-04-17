@@ -20,11 +20,13 @@ import Deaths from './component/deaths'
 import Active from './component/active'
 import Recovered from './component/recovered'
 import Critical from './component/critical'
+import Tests from './component/tests'
 
 class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      url: 'https://corona.lmao.ninja/v2/',
       data: {},
       list: [],
       lastUpdate: '',
@@ -42,12 +44,12 @@ class Home extends React.Component {
   }
 
   async fetchCovidList(sort) {
-    let { sortText } = this.state
+    let { url, sortText } = this.state
     Toast.loading('Loading...', 1000, null, true)
-    // const res = await fetch(`https://corona.lmao.ninja/all/`)
-    // let all = await res.json()
-    // all.country = 'Worldwide'
-    const resp = await fetch(`https://corona.lmao.ninja/countries/?sort=${sort?sort:sortText}`)
+    const res = await fetch(`${url}all/`)
+    let all = await res.json()
+    all.country = 'Worldwide'
+    const resp = await fetch(`${url}countries/?sort=${sort?sort:sortText}`)
     let countries = await resp.json()
     countries.forEach(country => {
       country.nick = country.countryInfo.iso2
@@ -55,8 +57,8 @@ class Home extends React.Component {
       country.lat = country.countryInfo.lat
       country.long = country.countryInfo.long
     });
-    // let data = [all, ...countries]
-    this.setState({ list: countries, lastUpdate: countries[0].updated })
+    let data = [all, ...countries]
+    this.setState({ list: data, lastUpdate: countries[0].updated })
     Toast.hide()
   }
 
@@ -205,6 +207,10 @@ class Home extends React.Component {
                   <Flex.Item>
                     <h2 style={{textAlign:'center',marginBottom:'-10px'}}><Critical/></h2>
                     <h3 style={{textAlign:'center'}}>{item.critical?numberToMoneyWithoutPrefix(item.critical):'-'}</h3>
+                  </Flex.Item>
+                  <Flex.Item>
+                    <h2 style={{textAlign:'center',marginBottom:'-10px'}}><Tests/></h2>
+                    <h3 style={{textAlign:'center'}}>{item.tests?numberToMoneyWithoutPrefix(item.tests):'-'}</h3>
                   </Flex.Item>
                 </Flex>
                 {/* {
