@@ -21,7 +21,8 @@ const resources = {
       "TodayDeathsOption": "Sort by Today Deaths",
       "ActiveOption": "Sort by Active",
       "RecoveredOption": "Sort by Recovered",
-      "CriticalOption": "Sort by Critical"
+      "CriticalOption": "Sort by Critical",
+      "TestsOption": "Sort by Tests"
     }
   },
   id: {
@@ -41,7 +42,8 @@ const resources = {
       "TodayDeathsOption": "Urut berdasarkan Kematian hari ini",
       "ActiveOption": "Urut berdasarkan Kasus Aktif",
       "RecoveredOption": "Urut berdasarkan Sembuh",
-      "CriticalOption": "Urut berdasarkan Kritis"
+      "CriticalOption": "Urut berdasarkan Kritis",
+      "TestsOption": "Urut berdasarkan Jumlah Tes"
     }
   }
 };

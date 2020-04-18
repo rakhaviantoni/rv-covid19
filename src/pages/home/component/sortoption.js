@@ -9,7 +9,8 @@ function SortOption({ t, i18n }) {
   <option value="todayDeaths">{t('TodayDeathsOption')}</option>
   <option value="recovered">{t('RecoveredOption')}</option>
   <option value="active">{t('ActiveOption')}</option>
-  <option value="critical">{t('CriticalOption')}</option></>
+  <option value="critical">{t('CriticalOption')}</option>
+  <option value="tests">{t('TestsOption')}</option></>
 }
 
 export default withTranslation()(SortOption);
